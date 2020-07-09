@@ -1,0 +1,16 @@
+.green {
+    background-color: black;
+    color: white;
+}
+
+.red {
+    background-color: #F0FFFF;
+}
+
+.toggle { 
+    background-color: black;
+    color: white; 
+}
+.btn--disable { 
+    background-color:#F0FFFF; 
+color: black}
