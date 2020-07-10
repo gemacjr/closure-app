@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   listDates;
   removeDuplicates = [];
-  sortedDates;
+  sortedDates = [11];
   dayOfWeek;
   accountPrefsReadyObj;
 
@@ -35,16 +35,29 @@ export class AppComponent implements OnInit {
 
 
 function buildDayPref(sortedAndCleanDates) {
+
   let prefs = [];
-  sortedAndCleanDates.forEach(element => {
-    let date = element;
-    let day = getDayOfWeek(element);
+  let openDates = ["12/31/2019", "01/02/2020", "05/23/2020", "05/26/2020","07/03/2020", "07/06/2020", "09/05/2020", "09/08/2020",
+                    "11/25/2020", "11/27/2020", "11/28/2020", "12/24/2020",  "12/26/2020"];
+
+  for(let i = 0; openDates.length > i; i++){
+    let closedDates = sortedAndCleanDates;
+    let closed;
+    let day = getDayOfWeek(openDates[i]);
+    
+    if (openDates.includes(closedDates[i])){
+      closed = true;
+    } else {
+      closed = false
+    }
+
     let pref = {
-      date: date,
+      date: openDates[i],
       day: day,
+      isClosed: closed
     };
     prefs.push(pref);
-  });
+  }
   return prefs;
 }
 
