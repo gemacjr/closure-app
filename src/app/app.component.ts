@@ -99,8 +99,7 @@ function getNumberOfDaysFromCurrentDate(dateProvided) {
   let yPast = pastDateMinus14.getFullYear();
 
   let pastDateString = (mPast <= 9 ? '0' + mPast : mPast) + '/' + (dPast <= 9 ? '0' + dPast : dPast) + '/' + yPast;
-
-
+  
   holidayDays.forEach(element => {
     if (element === pastDateString) {
       dayIs14FromHoliday = true;
@@ -119,22 +118,18 @@ function getNumberOfDaysFromCurrentDate(dateProvided) {
 }
 
 function isDateClosed(dateSelected, closureDates) {
-
   let businessDayDate = getNumberOfDaysFromCurrentDate(dateSelected);
   let tileColor = 'white';
 
   for (let i = 0; closureDates.length > i; i++) {
     if (dateSelected === closureDates[i]) {
       tileColor = 'black';
-
     }
     if (businessDayDate) {
       tileColor = 'grey';
     }
-
   }
   return tileColor;
-
 }
 
 function createListOfClosureDates(preferences) {
@@ -192,7 +187,6 @@ function getDayOfWeek(dateClosure) {
     case 6:
       weekDay = 'Sat';
   }
-
   return weekDay;
 }
 
