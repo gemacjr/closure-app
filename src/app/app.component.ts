@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PreferenceService } from './preference.service';
 import { AccountPrefrenceDataList } from './accountPrefrenceDataList';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,14 @@ export class AppComponent implements OnInit {
   dayOfWeek;
   accountPrefsReadyObj;
 
-  constructor(private prefService: PreferenceService) {}
+  nyeDayPrefArray = [];
+  memDayPrefArray = [];
+  independenceDayPrefArray = [];
+  laborDayPrefArray = [];
+  thanksgivingDayPrefArray = [];
+  christmasDayPrefArray = [];
+
+  constructor(private prefService: PreferenceService) { }
 
   ngOnInit() {
     this.prefService.getAccountPrefs().subscribe((data) => {
@@ -26,39 +34,136 @@ export class AppComponent implements OnInit {
       this.sortedDates = this.removeDuplicates.sort();
       // populate buttons if(date present) mark as true else false
       // populate button weekday and date
-      this.accountPrefsReadyObj = buildDayPref(this.sortedDates);
-      console.log(this.accountPrefsReadyObj);
+      //this.accountPrefsReadyObj = buildDayPref(this.sortedDates);
+      this.nyeDayPrefArray = buildPref_v2(nyeDays, this.sortedDates);
+      console.log("This is NYE array " + JSON.stringify(this.nyeDayPrefArray));
+      this.memDayPrefArray = buildPref_v2(memDays, this.sortedDates);
+      console.log("This is MEm array " + JSON.stringify(this.memDayPrefArray));
+      
+      this.independenceDayPrefArray = buildPref_v2(indepDays, this.sortedDates);
+      console.log("This is 4th array " + JSON.stringify(this.independenceDayPrefArray));
+      this.laborDayPrefArray = buildPref_v2(laborDays, this.sortedDates);
+      console.log("This is Labor array " + JSON.stringify(this.laborDayPrefArray));
+
+      this.thanksgivingDayPrefArray = buildPref_v2(thanksDays, this.sortedDates);
+      console.log("This is Thanksgiving array " + JSON.stringify(this.thanksgivingDayPrefArray));
+      this.christmasDayPrefArray = buildPref_v2(christmasDays, this.sortedDates);
+      console.log("This is Christmas array " + JSON.stringify(this.christmasDayPrefArray));
+      
+      
     });
   }
 }
 
+let nyeDays = ["12/31/2019", "01/02/2020"];
+let memDays = ["05/23/2020", "05/26/2020"];
+let indepDays = ["07/03/2020", "07/06/2020"];
+let laborDays = ["09/05/2020", "09/08/2020"];
+let thanksDays = ["11/25/2020", "11/27/2020", "11/28/2020"];
+let christmasDays = ["12/24/2020", "12/26/2020"];
 
+function buildPref_v2(holidayDates, closureDates) {
 
-function buildDayPref(sortedAndCleanDates) {
+  let forAllDays = holidayDates;
+  //console.log("This is closureDates " + closureDates + " This is Holidays " + holidayDates);
+  let prefArray = [];
+  for (let i = 0; forAllDays.length > i; i++){
+      let date = forAllDays[i].slice(0, 5);
+      let day = getDayOfWeek(forAllDays[i]);
+      let colorOfTile = isDateClosed(forAllDays[i], closureDates);
 
-  let prefs = [];
-  let openDates = ["12/31/2019", "01/02/2020", "05/23/2020", "05/26/2020","07/03/2020", "07/06/2020", "09/05/2020", "09/08/2020",
-                    "11/25/2020", "11/27/2020", "11/28/2020", "12/24/2020",  "12/26/2020"];
+      // nyeDays = holidayDates ["12/31/2019", "01/02/2020"] 
+      // closureDates all Dates
+      
+      // for(let j = 0; closureDates.length > j; j++){
+      //   if(forAllDays[i].includes(closureDates[j])){
+      //     colorOfTile = 'black';
+      //   } else {
+      //     colorOfTile = 'white';
+      //   }
+      
 
-  for(let i = 0; openDates.length > i; i++){
-    let closedDates = sortedAndCleanDates;
-    let closed;
-    let day = getDayOfWeek(openDates[i]);
-    
-    if (openDates.includes(closedDates[i])){
-      closed = true;
-    } else {
-      closed = false
-    }
-
-    let pref = {
-      date: openDates[i],
-      day: day,
-      isClosed: closed
-    };
-    prefs.push(pref);
+      //let isClosed = getClosureDates()
+        
+    //}
+      let dayPref = {
+        date: date,
+        day: day,
+        color: colorOfTile
+      }
+      prefArray.push(dayPref);
   }
-  return prefs;
+return prefArray;
+}
+
+function getNumberOfDaysFromCurrentDate(dateProvided) {
+  let businessDayLimit = 14;
+  let date = new Date();
+  let today = date.toLocaleDateString();
+
+		let d = date.getDate();
+		let m  = date.getMonth() + 1;
+		let y = date.getFullYear();
+
+    let dateString = (m <= 9 ? '0' + m : m)+ '/' + (d <= 9 ? '0' + d : d)  +  '/' + y;
+
+    let pastDate = new Date();
+    pastDate.setDate(pastDate.getDate() - 14);
+    let dPast = pastDate.getDay();
+    let mPast = pastDate.getMonth() + 1;
+    let yPast = pastDate.getFullYear();
+    
+    let pastDateString =  (mPast <= 9 ? '0' + mPast : mPast)+ '/' + (dPast <= 9 ? '0' + dPast : dPast)  +  '/' + yPast;
+    console.log("This is past date " + pastDateString);
+
+  //console.log("This is " + today.slice(0,5));
+   console.log("This is the dateString " + dateString);
+  // console.log("The dateProvided " + dateProvided);
+
+
+  let isPastDate = true;
+  if (dateString > dateProvided || dateProvided === "12/31/2019" || dateString ) {
+    isPastDate = true
+  } else {
+    isPastDate = false
+  }
+console.log("This is pastDue " + isPastDate);
+  return isPastDate;
+
+}
+
+// function getDateSelected(selectedDate, closureDates){
+
+// let isClosureDate = false;
+
+// if(selectedDate === closureDates)
+// {
+//   isClosureDate = true;
+// } else {
+//   isClosureDate = false;
+// }
+
+//   return isClosureDate;
+// }
+
+function isDateClosed(dateSelected, closureDates) {
+
+  let businessDayDate = getNumberOfDaysFromCurrentDate(dateSelected);
+  let tileColor = 'white';
+
+  for(let i = 0; closureDates.length > i; i++){
+    if ( dateSelected === closureDates[i].slice(0,5)){
+      tileColor = 'black';
+    } else if (businessDayDate){
+      tileColor = 'grey';
+    } else {
+      tileColor = 'white';
+    }
+  }
+
+
+  return tileColor;
+
 }
 
 function createListOfClosureDates(preferences) {
