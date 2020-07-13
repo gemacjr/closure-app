@@ -56,19 +56,19 @@ public getPreferences(){
     this.listDates = this.createListOfClosureDates(data);
     this.removeDuplicates = this.removeDuplicates(this.listDates.split(','));
     this.sortedDates = this.removeDuplicatesList.sort();
-    this.nyeDayPrefArray = this.buildPref_v2(this.nyeDays, this.listDates);
-     this.memDayPrefArray = this.buildPref_v2(this.memDays, this.sortedDates);
-     this.independenceDayPrefArray = this.buildPref_v2(this.indepDays, this.listDates);
-     this.laborDayPrefArray = this.buildPref_v2(this.laborDays, this.listDates);
-    this.thanksgivingDayPrefArray = this.buildPref_v2(this.thanksDays, this.listDates);
-    this.christmasDayPrefArray = this.buildPref_v2(this.christmasDays, this.listDates);
+    this.nyeDayPrefArray = this.buildPrefObj(this.nyeDays, this.listDates);
+     this.memDayPrefArray = this.buildPrefObj(this.memDays, this.sortedDates);
+     this.independenceDayPrefArray = this.buildPrefObj(this.indepDays, this.listDates);
+     this.laborDayPrefArray = this.buildPrefObj(this.laborDays, this.listDates);
+    this.thanksgivingDayPrefArray = this.buildPrefObj(this.thanksDays, this.listDates);
+    this.christmasDayPrefArray = this.buildPrefObj(this.christmasDays, this.listDates);
   });
 }
 
 
 
 
-public buildPref_v2(holidayDates, closureDates) {
+public buildPrefObj(holidayDates, closureDates) {
   let theClosedDates  = closureDates;;
   let forAllDays = holidayDates;
   let prefArray = [];
@@ -180,8 +180,6 @@ public isDateClosed(dateSelected, closureDates) {
   } else {
     isClosed = false;
   }
-  
-  console.log("Is Closed " + isClosed);
   return isClosed;
 }
 
@@ -226,13 +224,13 @@ public getDayOfWeek(dateClosure) {
       weekDay = 'Mon';
       break;
     case 2:
-      weekDay = 'Tues';
+      weekDay = 'Tue';
       break;
     case 3:
       weekDay = 'Wed';
       break;
     case 4:
-      weekDay = 'Thurs';
+      weekDay = 'Thu';
       break;
     case 5:
       weekDay = 'Fri';
