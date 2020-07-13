@@ -1,19 +1,4 @@
-<div class="container">
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div 
-                class="panel panel-default"
-                *ngFor="let pref of accountPrefsReadyObj ">
-                <button [ngStyle]="{'background-color': pref.isClosed ? 'grey' : 'white' }">{{ pref.date }} {{ pref.day }} </button>
-            </div>
-        </div>
-    </div>
 
 
-    
-</div>
+<app-delivery-closure></app-delivery-closure>
 
-<!-- *ngIf="pref.isClosed; " [ngStyle]="{'background-color': 'grey',
-                'font-size': '20px',
-                'font-weight': 'bold' }" -->

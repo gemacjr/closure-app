@@ -1,0 +1,25 @@
+<button
+class="btn-date"
+(click)="toggleSelected()"
+[ngClass]="{'selected' : isSelected && !isDefault && !isDefault,
+            'unselected' : !isSelected && !isPassed && !isDefault,
+            'passed-selected' : isSelected && isPassed && !isDefault,
+            'passed-unselected' : !isSelected && isPassed && !isDefault}"
+[disabled]="isPassed || isDefault">
+<svg *ngIf="isDefault" class="icon logo" focusable="false">
+    <use xlink:href="assets/static/icons/icon-CH-logo.svg#asset"></use>
+    <title>Cardinal Health</title>
+</svg>
+<svg *ngIf="isSelected && !isDefault" class="icon " focusable="false">
+    <use xlink:href="assets/static/icons/icon-checkmark.svg#asset"></use>
+    <title>Cardinal Health</title>
+</svg>
+<svg *ngIf="!isSelected && !isDefault" class="icon " focusable="false">
+    <use xlink:href="assets/static/icons/icon-checkbox2.svg#asset"></use>
+    <title>Cardinal Health</title>
+</svg>
+<div class="day">{{dayOfWeek}}</div>
+<div>{{dayOfMonth}}</div>
+</button>
+
+

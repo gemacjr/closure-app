@@ -1,0 +1,163 @@
+<div class="delivery-closures m-6">
+
+    <div class="row mb-4 d-flex">
+        <div class="col-3 preference-heading">
+            Standard Delivery Closures
+        </div>
+        <div class="col-6 mt-1 preference-blurb">
+            Please select your additional business closure days (typically preceding or following our non-delivery dates) no later than 2 weeks before the closure. If you do not notify us of your planned closings, deliveries will be attempted on your next scheduled delivery day and an undeliverable fee may be applied.
+        </div>
+        <div class="col-3 text-right preference-blurb">
+            <div>{{ lastEditedDate }}</div>
+            <div>{{ lastEditedByUser }}</div>
+        </div>
+    </div>
+
+    <div class="row delivery-headings">
+        <div class="col-3 offset-3 pb-5">
+            <div>Cardinal Health</div>
+            <div>non-delivery days</div>
+        </div>
+        <div class="col-5 pb-5">
+            <div>Quick select</div>
+            <div>your closed days</div>
+        </div>
+    </div>
+
+    <div class="row d-flex align-items-center">
+        <div class="col-2 offset-3 pb-4">
+            <div class="font-weight-bold">New Year's Day</div>
+            <div>Fri, Jan 1, 2021</div>
+        </div>
+        <div class="col-1 pb-4 d-flex justify-content-end border-right" >
+            <app-date-button [isDefault]="true" [dayOfWeek]="'Thurs'" [dayOfMonth]="'Jan 1'" ></app-date-button>
+        </div>
+        <div class="col-5 pb-4 d-flex align-items-center">
+            <div *ngFor="let pref of nyeDayPrefArray">
+                <app-date-button [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
+            </div>
+            <svg class="icon info">
+                <use
+                    xlink:href="/assets/static/icons/bootstrap-info.svg#asset"></use>
+                <title>The submission time for this holiday has passed.</title>
+            </svg>
+        </div>
+    </div>
+   
+    <div class="row d-flex align-items-center">
+        <div class="col-2 offset-3 pb-4">
+            <div class="font-weight-bold">Spring Inventory</div>
+            <div>Sat, Apr XX, 2021</div>
+        </div>
+        <div class="col-1 pb-4 d-flex justify-content-end border-right">
+            <app-date-button [isDefault]="true" [dayOfWeek]="'Sat'" [dayOfMonth]="'Apr XX'" ></app-date-button>
+        </div>
+        <div class="col-5 pb-4 d-flex align-items-center">
+           
+        </div>
+    </div>
+
+    <div class="row d-flex align-items-center">
+        <div class="col-2 offset-3 pb-4">
+            <div class="font-weight-bold">Memorial Day</div>
+            <div>Mon, May 30, 2021</div>
+        </div>
+        <div class="col-1 pb-4 d-flex justify-content-end border-right">
+            <app-date-button [isDefault]="true" [dayOfWeek]="'Mon'" [dayOfMonth]="'May 31'" ></app-date-button>
+        </div>
+        <div class="col-5 pb-4 d-flex align-items-center">
+            <div *ngFor="let pref of memDayPrefArray">
+                <app-date-button [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
+            </div>
+            <svg class="icon info">
+                <use
+                    xlink:href="/assets/static/icons/bootstrap-info.svg#asset"></use>
+                <title>The submission time for this holiday has passed.</title>
+            </svg>
+        </div>
+    </div>
+
+    <div class="row d-flex align-items-center">
+        <div class="col-2 offset-3 pb-4">
+            <div class="font-weight-bold">Independence Day</div>
+            <div>Sun, Jul 4th, 2021</div>
+        </div>
+        <div class="col-1 pb-4 d-flex justify-content-end border-right">
+            <app-date-button [isDefault]="true" [dayOfWeek]="'Sun'" [dayOfMonth]="'Jul 4'" ></app-date-button>
+        </div>
+        <div class="col-5 pb-4 d-flex align-items-center">
+            <div *ngFor="let pref of independenceDayPrefArray">
+                <app-date-button [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
+            </div>
+            <svg class="icon info">
+                <use
+                    xlink:href="/assets/static/icons/bootstrap-info.svg#asset"></use>
+                <title>The submission time for this holiday has passed.</title>
+            </svg>
+        </div>
+    </div>
+   
+    <div class="row d-flex align-items-center">
+        <div class="col-2 offset-3 pb-4">
+            <div class="font-weight-bold">RBC Orlando</div>
+            <div>Wed, July 14-Sat, Jul 17, 2021</div>
+        </div>
+        <div class="col-1 pb-4 d-flex justify-content-end border-right">
+
+        </div>
+        <div class="col-5 pb-4 d-flex align-items-center">
+            <app-date-button [isPassed]="true" [isSelected]="false" [dayOfWeek]="'Wed'" [dayOfMonth]="'Jul 14'" ></app-date-button>
+            <app-date-button [isPassed]="true" [isSelected]="false" [dayOfWeek]="'Thu'" [dayOfMonth]="'Jul 15'" ></app-date-button>
+            <app-date-button [isPassed]="true" [isSelected]="false" [dayOfWeek]="'Fri'" [dayOfMonth]="'Jul 16'" ></app-date-button>
+            <app-date-button [isPassed]="true" [isSelected]="false" [dayOfWeek]="'Sat'" [dayOfMonth]="'Jul 17'" ></app-date-button>
+        </div>
+    </div>
+
+    <div class="row d-flex align-items-center">
+        <div class="col-2 offset-3 pb-4">
+            <div class="font-weight-bold">Labor Day</div>
+            <div>Mon, Sep 6th, 2021</div>
+        </div>
+        <div class="col-1 pb-4 d-flex justify-content-end border-right">
+            <app-date-button [isDefault]="true" [dayOfWeek]="'Mon'" [dayOfMonth]="'Sep 6'" ></app-date-button>
+        </div>
+        <div class="col-5 pb-4 d-flex align-items-center">
+            <div *ngFor="let pref of laborDayPrefArray">
+                <app-date-button [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
+            </div>
+        </div>
+    </div>
+   
+
+    <div class="row d-flex align-items-center">
+        <div class="col-2 offset-3 pb-4">
+            <div class="font-weight-bold">Thanksgiving Day</div>
+            <div>Thu, Nov 25th, 2021</div>
+        </div>
+        <div class="col-1 pb-4 d-flex justify-content-end border-right">
+            <app-date-button [isDefault]="true" [dayOfWeek]="'Thu'" [dayOfMonth]="'Nov 25'" ></app-date-button>
+        </div>
+        <div class="col-5 pb-4 d-flex align-items-center">
+            <div *ngFor="let pref of thanksgivingDayPrefArray">
+                <app-date-button [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-flex align-items-center">
+        <div class="col-2 offset-3">
+            <div class="font-weight-bold">Christmas Day</div>
+            <div>Sat, Dec 25th, 2021</div>
+        </div>
+        <div class="col-1 d-flex justify-content-end border-right">
+            <app-date-button [isDefault]="true" [dayOfWeek]="'Sat'" [dayOfMonth]="'Dec 25'" ></app-date-button>
+        </div>
+        <div class="col-5 d-flex align-items-center">
+            <div *ngFor="let pref of christmasDayPrefArray">
+            <app-date-button [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
+        </div>
+        </div>
+    </div>
+
+</div>
+
