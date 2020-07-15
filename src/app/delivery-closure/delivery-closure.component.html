@@ -23,28 +23,73 @@
             <div>your closed days</div>
         </div>
     </div>
+    
+    <div class="row d-flex align-items-center">
+        <div class="col-2 offset-3 pb-1">
+            <div class="font-weight-bold">New Year's Day</div>
+            <div>Fri, Jan 1, 2021</div>
+        </div>
+        <!-- <div class="col-1 pb-4 d-flex justify-content-end border-right" >
+            
+            <app-date-button [isDefault]="true" [dayOfWeek]="'Thurs'" [dayOfMonth]="'Jan 1'" ></app-date-button>
+               
+            
+        </div> -->
+        <div class="col-5 pb-4 d-flex align-items-center">
+             <div *ngFor="let pref of prefTest"> 
+                    <div *ngIf="pref.isDefault; else elseTemplate" class="col-2 pb-1 d-flex justify-content-end border-right">
+                       
+                    <app-date-button [isDefault]="pref.isDefault" [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
+                    
+                    </div>
+                    <ng-template #elseTemplate >
+                        <app-date-button [isDefault]="pref.isDefault" [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
+                    </ng-template>
+                
+            </div>
+            
+            <!-- <svg class="icon info">
+                <use
+                    xlink:href="/assets/static/icons/bootstrap-info.svg#asset"></use>
+                <title>The submission time for this holiday has passed.</title>
+            </svg> -->
+        </div>
+    </div>
 
     <div class="row d-flex align-items-center">
         <div class="col-2 offset-3 pb-4">
             <div class="font-weight-bold">New Year's Day</div>
             <div>Fri, Jan 1, 2021</div>
         </div>
-        <div class="col-1 pb-4 d-flex justify-content-end border-right" >
+        <!-- <div class="col-1 pb-4 d-flex justify-content-end border-right" >
+            
             <app-date-button [isDefault]="true" [dayOfWeek]="'Thurs'" [dayOfMonth]="'Jan 1'" ></app-date-button>
-        </div>
+               
+            
+        </div> -->
         <div class="col-5 pb-4 d-flex align-items-center">
-            <div *ngFor="let pref of nyeDayPrefArray">
-                <app-date-button [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
+             <div *ngFor="let pref of prefTest"> 
+                    <div *ngIf="pref.isDefault; else elseTemplate" class="col-2 pb-1 d-flex justify-content-end border-right">
+                       
+                    <app-date-button [isDefault]="pref.isDefault" [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
+                    
+                    </div>
+                    <ng-template #elseTemplate >
+                        <app-date-button [isDefault]="pref.isDefault" [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
+                    </ng-template>
+                
             </div>
-            <svg class="icon info">
+            
+            <!-- <svg class="icon info">
                 <use
                     xlink:href="/assets/static/icons/bootstrap-info.svg#asset"></use>
                 <title>The submission time for this holiday has passed.</title>
-            </svg>
+            </svg> -->
         </div>
     </div>
+    
    
-    <div class="row d-flex align-items-center">
+    <!-- <div class="row d-flex align-items-center">
         <div class="col-2 offset-3 pb-4">
             <div class="font-weight-bold">Spring Inventory</div>
             <div>Sat, Apr XX, 2021</div>
@@ -157,7 +202,7 @@
             <app-date-button [isPassed]="pref.isPassed" [isSelected]="pref.isSelected" [dayOfWeek]="pref.day" [dayOfMonth]="pref.date" ></app-date-button>
         </div>
         </div>
-    </div>
+    </div> -->
 
 </div>
 

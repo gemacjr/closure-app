@@ -30,20 +30,51 @@ listaccountPrefs: AccountPrefrenceDataList[];
   christmasDayPrefArray = [];
   dataObject;
 
-nyeDays = ["12/31/2019", "01/02/2020"];
+nyeDays = ["12/31/2019", "01/02/2020", "01/01/2020"];
  memDays = ["05/23/2020", "05/26/2020"];
  indepDays = ["07/03/2020", "07/06/2020"];
  laborDays = ["09/05/2020", "09/08/2020"];
  thanksDays = ["11/25/2020", "11/27/2020", "11/28/2020"];
  christmasDays = ["12/24/2020", "12/26/2020"];
+  theClosedDates;
+
+  prefTest = [
+    {
+      type: "NYE_day",
+      date: "01",
+      day: "Thu",
+      isPassed: true,
+      isSelected: false,
+      isDefault: true
+    },
+    {
+      type: "NYE_day",
+      date: "31",
+      day: "Wed",
+      isPassed: false,
+      isSelected: true,
+      isDefault: false
+    },
+    {
+      type: "NYE_day",
+      date: "02",
+      day: "Fri",
+      isPassed: true,
+      isSelected: false,
+      isDefault: false
+    }
+]
 
   constructor(private prefService: PreferenceService) { }
 
   ngOnInit() {
-    this.getPreferences();
+    //this.getPreferences();
+    this.getTestPref();
     
   }
-
+public getTestPref(){
+  return this.prefTest;
+}
 
 public getPreferences(){
   console.log('Called DeliveryClosureComponent::getAccoutnPreferences');
@@ -69,7 +100,7 @@ public getPreferences(){
 
 
 public buildPrefObj(holidayDates, closureDates) {
-  let theClosedDates  = closureDates;;
+    this.theClosedDates = closureDates;
   let forAllDays = holidayDates;
   let prefArray = [];
   for (let i = 0; forAllDays.length > i; i++) {
@@ -78,7 +109,8 @@ public buildPrefObj(holidayDates, closureDates) {
     let monthDay = month + " " + date.slice(3,5);
     let day = this.getDayOfWeek(forAllDays[i]);
     let isPassed = this.getNumberOfDaysFromCurrentDate(forAllDays[i]);
-    let isSelected = this.isDateClosed(forAllDays[i], theClosedDates);
+    let isSelected = this.isDateClosed(forAllDays[i], this.theClosedDates);
+    let isDefault = this.isDefaultHoliday(this.theClosedDates);
     if(isPassed && isSelected ){
       isSelected = false;
     }
@@ -86,7 +118,8 @@ public buildPrefObj(holidayDates, closureDates) {
       date: monthDay,
       day: day,
       isPassed: isPassed,
-      isSelected: isSelected
+      isSelected: isSelected,
+      isDefault: isDefault
     }
     prefArray.push(dayPref);
   }
@@ -137,7 +170,8 @@ public getMonth(month){
 
 public getNumberOfDaysFromCurrentDate(dateProvided) {
 
-  let holidayDays = ["01/01/2020", "05/25/2020", "07/04/2020", "09/07/2020", "11/26/2020", "12/25/2020"]
+  let holidayDays = ["01/01/2020", "05/25/2020", "07/04/2020", "09/07/2020", "11/26/2020", "12/25/2020"];
+  let holidayDays2021 = ["01/01/2021", "05/31/2020", "07/04/2021", "09/06/2020", "11/25/2020", "12/25/2021"];
   let date = new Date();
   let dayIs14FromHoliday = true;
 
@@ -170,6 +204,23 @@ public getNumberOfDaysFromCurrentDate(dateProvided) {
     isPastDate = false
   }
   return isPastDate;
+}
+
+public isDefaultHoliday(closedDate){
+  let holidayDays2021 = ["01/01/2020", "05/25/2020", "07/04/2020", "09/07/2020", "11/26/2020", "12/25/2020"];
+  console.log("The isDefault " + closedDate);
+  let isHolidayDate = false;
+  for(let i = 0; holidayDays2021.length < i; i++){
+    console.log("This is DEfaultHoliday " + closedDate + " -- " + holidayDays2021[i] );
+    if(closedDate[i] === holidayDays2021[i]){
+      isHolidayDate = true;
+    } else {
+      isHolidayDate = false;
+    }
+  }
+  
+  return isHolidayDate;
+
 }
 
 public isDateClosed(dateSelected, closureDates) {
