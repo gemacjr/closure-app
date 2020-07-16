@@ -9,14 +9,15 @@ import { AccountPrefrenceDataList } from '../accountPrefrenceDataList';
 })
 export class DeliveryClosureComponent implements OnInit {
 
-lastEditedByUser = 'Ed'
-lastEditedDate = "09";
+  constructor(private prefService: PreferenceService) { }
 
-useApiDataFromSessionStorage: any;
+  lastEditedId: string;;
+  lastEditedDate: string;
+  useApiDataFromSessionStorage: any;
 
-listaccountPrefs: AccountPrefrenceDataList[];
+listaccountPrefs: AccountPrefrenceDataList = new AccountPrefrenceDataList();
 
-  listDates;
+  listDates: any;
   removeDuplicatesList = [];
   sortedDates: any;
   dayOfWeek;
@@ -29,15 +30,15 @@ listaccountPrefs: AccountPrefrenceDataList[];
   thanksgivingDayPrefArray = [];
   christmasDayPrefArray = [];
   dataObject;
+  myObj;
+  theObjectId;
 
-nyeDays = ["12/31/2019", "01/02/2020"];
- memDays = ["05/23/2020", "05/26/2020"];
- indepDays = ["07/03/2020", "07/06/2020"];
- laborDays = ["09/05/2020", "09/08/2020"];
- thanksDays = ["11/25/2020", "11/27/2020", "11/28/2020"];
- christmasDays = ["12/24/2020", "12/26/2020"];
-
-  constructor(private prefService: PreferenceService) { }
+  nyeDays = ["12/31/2019", "01/02/2020"];
+  memDays = ["05/23/2020", "05/26/2020"];
+  indepDays = ["07/03/2020", "07/06/2020"];
+  laborDays = ["09/05/2020", "09/08/2020"];
+  thanksDays = ["11/25/2020", "11/27/2020", "11/28/2020"];
+  christmasDays = ["12/24/2020", "12/26/2020"];
 
   ngOnInit() {
     this.getPreferences();
@@ -48,20 +49,26 @@ nyeDays = ["12/31/2019", "01/02/2020"];
 public getPreferences(){
   console.log('Called DeliveryClosureComponent::getAccoutnPreferences');
   this.useApiDataFromSessionStorage = JSON.parse(sessionStorage.getItem("userAPIData"));
-  //console.log(" Session Storage " + this.useApiDataFromSessionStorage.id);
+  console.log(" Session Storage " + this.useApiDataFromSessionStorage);
 
-  this.prefService.getAccountPrefs().subscribe((data) => {
-    this.listaccountPrefs = data;
-
-    this.listDates = this.createListOfClosureDates(data);
-    this.removeDuplicates = this.removeDuplicates(this.listDates.split(','));
-    this.sortedDates = this.removeDuplicatesList.sort();
-    this.nyeDayPrefArray = this.buildPrefObj(this.nyeDays, this.listDates);
-     this.memDayPrefArray = this.buildPrefObj(this.memDays, this.sortedDates);
-     this.independenceDayPrefArray = this.buildPrefObj(this.indepDays, this.listDates);
-     this.laborDayPrefArray = this.buildPrefObj(this.laborDays, this.listDates);
-    this.thanksgivingDayPrefArray = this.buildPrefObj(this.thanksDays, this.listDates);
-    this.christmasDayPrefArray = this.buildPrefObj(this.christmasDays, this.listDates);
+  this.prefService.getAccountPrefs()
+    .subscribe(data => {
+        this.listaccountPrefs = data;
+        console.log("The USer id " + data.lastEditedBy);
+        sessionStorage.setItem('prefApi', JSON.stringify(data));
+        this.useApiDataFromSessionStorage = sessionStorage.getItem('prefApi');
+        this.myObj = JSON.parse(this.useApiDataFromSessionStorage);
+        this.lastEditedId = this.myObj[0].lastUpdatedBy;
+        this.lastEditedDate = this.myObj[0].lastUpdateTimeStamp;
+        this.listDates = this.createListOfClosureDates(data);
+        this.removeDuplicates = this.removeDuplicates(this.listDates.split(','));
+        this.sortedDates = this.removeDuplicatesList.sort();
+        this.nyeDayPrefArray = this.buildPrefObj(this.nyeDays, this.listDates);
+        this.memDayPrefArray = this.buildPrefObj(this.memDays, this.listDates);
+        this.independenceDayPrefArray = this.buildPrefObj(this.indepDays, this.listDates);
+        this.laborDayPrefArray = this.buildPrefObj(this.laborDays, this.listDates);
+        this.thanksgivingDayPrefArray = this.buildPrefObj(this.thanksDays, this.listDates);
+        this.christmasDayPrefArray = this.buildPrefObj(this.christmasDays, this.listDates);
   });
 }
 
